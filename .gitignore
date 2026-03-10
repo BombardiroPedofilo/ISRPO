@@ -1,0 +1,33 @@
+# Папки VS Studio
+.vs/
+.vscode/
+otchetes/
+
+# Файлы сборки
+[Bb]in/
+[Oo]bj/
+*.exe
+*.pdb
+*.dll
+
+
+# Временные файлы
+*.tmp
+*.temp
+*.log
+
+# Системные файлы
+Thumbs.db
+
+#  папки bin и obj во всех проектах
+**/bin/
+**/obj/
+
+# другие служебные папки
+**/Debug/
+**/Release/
+**/packages/
+**/node_modules/
+**/.vs/
+**/.vscode/
+**/.idea/
