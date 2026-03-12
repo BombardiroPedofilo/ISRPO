@@ -141,6 +141,10 @@ namespace school_tests
         {
             timer.Stop();
 
+            // Вычисляем затраченное время (в секундах)
+            int timeSpent = (25 * 60) - timeLeft; // если тест завершён досрочно, timeLeft > 0, иначе 0
+
+            // Сохраняем ответы пользователя
             foreach (DataRow row in questionsTable.Rows)
             {
                 int qid = Convert.ToInt32(row["Id"]);
@@ -149,6 +153,9 @@ namespace school_tests
                 bool isCorrect = (selected.HasValue && selected.Value == correct);
                 DatabaseHelper.SaveAnswer(userId, qid, selected, isCorrect);
             }
+
+            // Обновляем длительность теста для пользователя
+            DatabaseHelper.UpdateUserDuration(userId, timeSpent);
 
             int correctCount = DatabaseHelper.GetCorrectAnswersCount(userId);
             int total = DatabaseHelper.GetTotalQuestionsCount();

@@ -8,7 +8,8 @@ namespace school_tests
 {
     public static class DatabaseHelper
     {
-        private static string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TestDB;Integrated Security=True";
+        //private static string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TestDB;Integrated Security=True";
+        private static string connectionString = @"Data Source=.\SQLEXPRESS02;Initial Catalog=TestDB;Integrated Security=True";
 
         /// <summary> Получить список всех вопросов </summary>
         public static DataTable GetQuestions()
@@ -75,6 +76,41 @@ namespace school_tests
                 SqlCommand cmd = new SqlCommand(query, conn);
                 conn.Open();
                 return (int)cmd.ExecuteScalar();
+            }
+        }
+        public static void UpdateUserDuration(int userId, int duration)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Users SET Duration = @duration WHERE Id = @userId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@duration", duration);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static DataTable GetUserHistory()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"
+            SELECT 
+                u.FirstName, 
+                u.LastName, 
+                u.TestDate, 
+                COUNT(CASE WHEN ua.IsCorrect = 1 THEN 1 END) AS CorrectAnswers,
+                (SELECT COUNT(*) FROM Questions) AS TotalQuestions,
+                u.Duration
+            FROM Users u
+            LEFT JOIN UserAnswers ua ON u.Id = ua.UserId
+            GROUP BY u.Id, u.FirstName, u.LastName, u.TestDate, u.Duration
+            ORDER BY u.TestDate DESC";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                return dt;
             }
         }
     }
