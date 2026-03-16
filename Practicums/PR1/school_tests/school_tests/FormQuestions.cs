@@ -165,18 +165,18 @@ namespace school_tests
             this.Close();
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            if (timeLeft > 0 && currentIndex < totalQuestions - 1)
-            {
-                var result = MessageBox.Show("Вы уверены, что хотите прервать тест?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.No)
-                {
-                    e.Cancel = true;
-                    return;
-                }
-            }
-            base.OnFormClosing(e);
-        }
+        //protected override void OnFormClosing(FormClosingEventArgs e)
+        //{
+        //    if (timeLeft > 0 && currentIndex < totalQuestions - 1)
+        //    {
+        //        var result = MessageBox.Show("Вы уверены, что хотите прервать тест?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //        if (result == DialogResult.No)
+        //        {
+        //            e.Cancel = true;
+        //            return;
+        //        }
+        //    }
+        //    base.OnFormClosing(e);
+        //}
     }
 }
