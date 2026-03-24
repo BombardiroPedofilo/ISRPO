@@ -5,8 +5,8 @@ namespace BackpackApp
 {
     public static class DatabaseInitializer
     {
-        private const string MasterConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=backpack;Integrated Security=True";
-        private const string BackpackConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=backpack;Integrated Security=True";
+        private const string MasterConnectionString = @"Data Source=.\SQLEXPRESS02;Initial Catalog=backpack;Integrated Security=True";
+        private const string BackpackConnectionString = @"Data Source=.\SQLEXPRESS02;Initial Catalog=backpack;Integrated Security=True";
 
         public static void Initialize()
         {

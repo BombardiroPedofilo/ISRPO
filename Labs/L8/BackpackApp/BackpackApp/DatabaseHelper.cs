@@ -8,7 +8,7 @@ namespace BackpackApp
 {
     public static class DatabaseHelper
     {
-        private const string ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=backpack;Integrated Security=True";
+        private const string ConnectionString = @"Data Source=.\SQLEXPRESS02;Initial Catalog=backpack;Integrated Security=True";
 
         public static List<Item> GetAllItems()
         {

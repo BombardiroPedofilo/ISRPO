@@ -8,7 +8,7 @@ namespace FilesApp
     public partial class SimbolsCount : Form
     {
         // === НАСТРОЙКА ПОДКЛЮЧЕНИЯ К БАЗЕ ДАННЫХ ===
-        private readonly string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=FileHistoryDB;Integrated Security=True";
+        private readonly string connectionString = @"Data Source=.\SQLEXPRESS02;Initial Catalog=FileHistoryDB;Integrated Security=True";
 
         public SimbolsCount()
         {
@@ -23,7 +23,7 @@ namespace FilesApp
             try
             {
                 // Подключаемся к master, чтобы проверить существование базы FileHistoryDB
-                using (var masterConnection = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=master;Integrated Security=True"))
+                using (var masterConnection = new SqlConnection(@"Data Source=.\SQLEXPRESS02;Initial Catalog=master;Integrated Security=True"))
                 {
                     masterConnection.Open();
                     string checkDbQuery = "SELECT database_id FROM sys.databases WHERE Name = 'FileHistoryDB'";

@@ -6,7 +6,7 @@ namespace BackpackApp.Debugging
 {
     public static class DatabaseTester
     {
-        private const string ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=backpack;Integrated Security=True";
+        private const string ConnectionString = @"Data Source=.\SQLEXPRESS02;Initial Catalog=backpack;Integrated Security=True";
 
         [Conditional("DEBUG")]
         public static void TestConnection()
