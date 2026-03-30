@@ -31,9 +31,17 @@ namespace PoleChudes
 
             originalWord = GetRandomWord().ToUpper();
 
-            var shuffled = originalWord.ToCharArray()
-                .OrderBy(x => Guid.NewGuid())
-                .ToList();
+            List<char> shuffled;
+
+            // 🔥 ГАРАНТИЯ: слово не будет в исходном виде
+            do
+            {
+                shuffled = originalWord
+                    .ToCharArray()
+                    .OrderBy(x => Guid.NewGuid())
+                    .ToList();
+            }
+            while (new string(shuffled.ToArray()) == originalWord);
 
             foreach (char c in shuffled)
             {

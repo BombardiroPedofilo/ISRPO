@@ -24,6 +24,9 @@ namespace AlarmClock
             timer.Start();
             player.SoundLocation = Application.StartupPath + @"\alarm.wav";
 
+            panelAlarm.Visible = true;
+            panelAlarm.BackColor = System.Drawing.Color.LightGray;
+
             LoadAlarms();
         }
 
@@ -65,10 +68,16 @@ namespace AlarmClock
 
         private void TriggerAlarm(Alarm alarm)
         {
-            panelAlarm.Visible = true;
+            panelAlarm.BackColor = System.Drawing.Color.Red;
             timerBlink.Start();
             player.Load();
             player.PlayLooping();
+
+            timerBlink.Start();
+            player.Load();
+            player.PlayLooping();
+
+            labelAlarm.Text = "Будильник звенит!";
 
             if (!alarm.RepeatDaily)
             {
@@ -135,9 +144,14 @@ namespace AlarmClock
 
         private void StopAlarm()
         {
-            panelAlarm.Visible = false;
+            panelAlarm.BackColor = System.Drawing.Color.LightGray;
             timerBlink.Stop();
             player.Stop();
+
+            timerBlink.Stop();
+            player.Stop();
+
+            labelAlarm.Text = "Будильник остановлен";
         }
 
         private void timerBlink_Tick(object sender, EventArgs e)
