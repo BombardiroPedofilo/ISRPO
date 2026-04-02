@@ -59,6 +59,8 @@ namespace MusicPlayer
 
             try
             {
+                player.Stop(); // ВАЖНО
+
                 byte[] data = db.GetFileData(track.Id);
                 player.Play(data);
 
@@ -78,10 +80,11 @@ namespace MusicPlayer
 
         private void UpdateTrackInfo(MusicTrack track)
         {
-            labelTitle.Text = "Название: " + track.Title;
-            labelArtist.Text = "Исполнитель: " + track.Artist;
-            labelDuration.Text = "Длительность: " + track.Duration?.ToString(@"mm\:ss");
-            labelPlays.Text = "Прослушиваний: " + track.PlayCount;
+            labelTitleValue.Text = track.Title;
+            labelArtistValue.Text = track.Artist;
+            labelDurationValue.Text = track.Duration?.ToString(@"mm\:ss");
+            labelPlaysValue.Text = track.PlayCount.ToString();
+            labelDateValue.Text = track.DateAdded.ToString("dd.MM.yyyy");
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -99,20 +102,27 @@ namespace MusicPlayer
             }
         }
 
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null) return;
+
+            currentIndex = dataGridView1.CurrentRow.Index;
+        }
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            if (currentIndex == -1 && tracks.Count > 0)
+            if (tracks.Count == 0) return;
+
+            if (currentIndex == -1)
+                currentIndex = 0;
+
+            if (isPaused)
             {
-                PlayTrack(0);
-            }
-            else if (isPaused)
-            {
-                player.Play(db.GetFileData(tracks[currentIndex].Id));
+                player.Resume();
                 isPaused = false;
             }
             else
             {
-                btnNext_Click(sender, e);
+                PlayTrack(currentIndex);
             }
         }
 
@@ -220,6 +230,11 @@ namespace MusicPlayer
             }
 
             dataGridView1.DataSource = db.Search(query);
+        }
+
+        private void l5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

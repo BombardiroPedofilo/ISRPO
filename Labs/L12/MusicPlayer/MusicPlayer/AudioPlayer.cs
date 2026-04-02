@@ -8,17 +8,19 @@ namespace MusicPlayer
         private WaveOutEvent output;
         private Mp3FileReader reader;
 
-
         public void Play(byte[] data)
         {
-            Stop();
-
             var ms = new MemoryStream(data);
             reader = new Mp3FileReader(ms);
 
             output = new WaveOutEvent();
             output.Init(reader);
             output.Play();
+        }
+
+        public void Resume()
+        {
+            output?.Play();
         }
 
         public void Pause()
@@ -30,6 +32,8 @@ namespace MusicPlayer
         {
             output?.Stop();
             reader?.Dispose();
+            reader = null;
+            output = null;
         }
 
         public void SetVolume(float volume)
