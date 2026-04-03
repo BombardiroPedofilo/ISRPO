@@ -24,6 +24,7 @@ namespace MusicPlayer
             timer.Interval = 500;
             timer.Tick += Timer_Tick;
             timer.Start();
+            dataGridView1.ReadOnly = false;
         }
 
         private void LoadTracks()
@@ -163,7 +164,7 @@ namespace MusicPlayer
 
         private void trackBarVolume_Scroll(object sender, EventArgs e)
         {
-            float volume = 1f - (trackBarVolume.Value / 100f);
+            float volume = trackBarVolume.Value / 100f;
             player.SetVolume(volume);
             labelVolume.Text = "Громкость: " + trackBarVolume.Value + "%";
         }
@@ -205,6 +206,21 @@ namespace MusicPlayer
             }
         }
 
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var track = tracks[e.RowIndex];
+
+            try
+            {
+                db.UpdateTrack(track);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка сохранения: " + ex.Message);
+            }
+        }
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow == null) return;

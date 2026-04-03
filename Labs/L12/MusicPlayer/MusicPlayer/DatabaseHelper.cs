@@ -138,5 +138,29 @@ namespace MusicPlayer
                 return (byte[])cmd.ExecuteScalar();
             }
         }
+
+        public void UpdateTrack(MusicTrack track)
+        {
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                var cmd = new SqlCommand(@"
+            UPDATE MusicTracks SET
+                Title = @Title,
+                Artist = @Artist,
+                Album = @Album,
+                Genre = @Genre
+            WHERE Id = @Id", conn);
+
+                cmd.Parameters.AddWithValue("@Title", track.Title ?? "");
+                cmd.Parameters.AddWithValue("@Artist", track.Artist ?? "");
+                cmd.Parameters.AddWithValue("@Album", track.Album ?? "");
+                cmd.Parameters.AddWithValue("@Genre", track.Genre ?? "");
+                cmd.Parameters.AddWithValue("@Id", track.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
